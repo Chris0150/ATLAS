@@ -1,26 +1,66 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, Suspense } from 'react'
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import AppBar from "./components/components/Appbar";
+import Menu from "./components/components/Menu";
+import Loader from "./components/components/Loader";
+import * as Charts from "./utils/_charts";
 
-function App() {
+const App: React.FC = (): JSX.Element => {
+  const classes = useStyles();
+  const [charts, showCharts] = useState(false);
+  const runSimulation = ():void => showCharts(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AppBar title={"ATLASWeb 1.1"} />
+      <Menu runSimulation={runSimulation} />
+      <Suspense fallback={<Loader />}>
+        <div className={classes.graphs}>
+          {charts ? (
+            <>
+              <Typography className={classes.title}>
+                Simulation results:
+              </Typography>
+              <Charts.Map />
+              <Charts.Surface3D />
+              <Charts.Bubbles />
+              <Charts.Splom />
+              <Charts.MapAnimated />
+              <Charts.Bars />
+              <Charts.Boxes />
+              <Charts.Regression />
+              <Charts.Timeline />
+              <Charts.Histogram />
+              <Charts.MapBubbles />
+            </>
+          ) : null}
+        </div>
+      </Suspense>
+      <AppBar />
+    </>
   );
-}
+};
 
 export default App;
+
+const useStyles = makeStyles(() => ({
+  title: {
+    zIndex: 1,
+    top: "3%",
+    fontWeight: "bold",
+    position: "absolute"
+  },
+  graphs: {
+    top: "6%",
+    left: "16%",
+    width: "80%",
+    paddingTop: "3%",
+    paddingLeft: "3%",
+    overflowY: "auto",
+    textAlign: "center",
+    position: "absolute",
+    backgroundColor: "lightgrey",
+    height: window.innerHeight - 170
+  }
+}));

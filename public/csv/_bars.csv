@@ -1,0 +1,3 @@
+﻿type,mode,x__001,x__002,x__003,y__001,y__002,y__003,marker__color,name
+scatter,lines+points,1,2,3,2,6,3,orange,average
+bar,null, 1,2,3,2,5,3,#b71522, SiO2 molarity
