@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import useToggleState from "../../utils/hooks/useToggleState";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -25,36 +26,12 @@ interface IPropsModel {
 
 const Menu = (props:IPropsModel):JSX.Element => {
   const classes = useStyles();
-  const [open1, setOpen1] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
-  const [open4, setOpen4] = useState(false);
-  const [open5, setOpen5] = useState(false);
-  const [open6, setOpen6] = useState(false);
-
-  const handleClick1 = () => {
-    setOpen1(!open1);
-  };
-
-  const handleClick2 = () => {
-    setOpen2(!open2);
-  };
-
-  const handleClick3 = () => {
-    setOpen3(!open3);
-  };
-
-  const handleClick4 = () => {
-    setOpen4(!open4);
-  };
-
-  const handleClick5 = () => {
-    setOpen5(!open5);
-  };
-
-  const handleClick6 = () => {
-    setOpen6(!open6);
-  };
+  const [open1, toggleOpen1] = useToggleState(false);
+  const [open2, toggleOpen2] = useToggleState(false);
+  const [open3, toggleOpen3] = useToggleState(false);
+  const [open4, toggleOpen4] = useToggleState(false);
+  const [open5, toggleOpen5] = useToggleState(false);
+  const [open6, toggleOpen6] = useToggleState(false);
 
   return (
     <List
@@ -68,7 +45,7 @@ const Menu = (props:IPropsModel):JSX.Element => {
       className={classes.root}
     >
       {/* BASIC INFO */}
-      <ListItem button onClick={handleClick1}>
+      <ListItem button onClick={toggleOpen1}>
         <ListItemIcon>
           <Info className={classes.icons}/>
         </ListItemIcon>
@@ -93,7 +70,7 @@ const Menu = (props:IPropsModel):JSX.Element => {
       </Collapse>
 
       {/* COMP DOMAIN */}
-      <ListItem button onClick={handleClick2}>
+      <ListItem button onClick={toggleOpen2}>
         <ListItemIcon>
           <Domain className={classes.icons}/>
         </ListItemIcon>
@@ -130,7 +107,7 @@ const Menu = (props:IPropsModel):JSX.Element => {
       </Collapse>
 
       {/* PHYSICS */}
-      <ListItem button onClick={handleClick3}>
+      <ListItem button onClick={toggleOpen3}>
         <ListItemIcon>
           <TrackChanges className={classes.icons}/>
         </ListItemIcon>
@@ -155,7 +132,7 @@ const Menu = (props:IPropsModel):JSX.Element => {
       </Collapse>
 
       {/* OUTPUT GRID */}
-      <ListItem button onClick={handleClick4}>
+      <ListItem button onClick={toggleOpen4}>
         <ListItemIcon>
           <ViewComfy className={classes.icons}/>
         </ListItemIcon>
@@ -203,7 +180,7 @@ const Menu = (props:IPropsModel):JSX.Element => {
       </Collapse>
 
       {/* METEO DATA */}
-      <ListItem button onClick={handleClick5}>
+      <ListItem button onClick={toggleOpen5}>
         <ListItemIcon>
           <Cloud className={classes.icons}/>
         </ListItemIcon>
@@ -250,7 +227,7 @@ const Menu = (props:IPropsModel):JSX.Element => {
       </Collapse>
 
       {/* SOURCE TERM */}
-      <ListItem button onClick={handleClick6}>
+      <ListItem button onClick={toggleOpen6}>
         <ListItemIcon>
           <FilterHdr className={classes.icons}/>
         </ListItemIcon>
