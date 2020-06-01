@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Plot from "react-plotly.js";
-import fetchData from "../../utils/_data";
+import fetchData from "../../utils/data/parser";
 import configurationJSON from "../../utils/config.json"
 import layoutJSON from "../../utils/layout.json"
 
-interface dataModel{
+interface IDataModel{
   y: String[],
   x: String[]
   type: String,
@@ -18,13 +18,13 @@ function unpack(rows, key) {
     return rows.map(function(row) { return row[key]; });
   }
 
-const Timeline: React.FC = (): JSX.Element => {
-    const [data, setData] = useState([]);
-    const [frames, setFrames] = useState([]);
-    const [layout, setLayout] = useState({});
-    const [config, setConfig] = useState({});
+const Timeline:React.FC = ():JSX.Element => {
+    const [data, setData] = React.useState([]);
+    const [frames, setFrames] = React.useState([]);
+    const [layout, setLayout] = React.useState({});
+    const [config, setConfig] = React.useState({});
 
-    useEffect(() => {
+    React.useEffect(() => {
         async function getData() {
             const rows:[] = await fetchData("./csv/_timeline.csv")
 
@@ -43,7 +43,7 @@ const Timeline: React.FC = (): JSX.Element => {
               frames[i].data[0].y = y2.slice(0, i+1);
             }
           
-            var trace2:dataModel = {
+            var trace2:IDataModel = {
               type: "scatter",
               mode: "lines",
               name: 'High',
@@ -53,7 +53,7 @@ const Timeline: React.FC = (): JSX.Element => {
               line: {color: '#b71522'}
             }
           
-            var trace1:dataModel = {
+            var trace1:IDataModel = {
               type: "scatter",
               mode: "lines",
               name: 'Low',

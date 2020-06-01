@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Plot from "react-plotly.js";
 import configurationJSON from "../../utils/config.json"
-import fetchData from "../../utils/_data";
+import fetchData from "../../utils/data/parser";
 
-interface dataModel{
+interface IDataModel{
   type: String,
   locationmode: String,
   locations: String,
@@ -19,13 +19,13 @@ function filter_and_unpack(rows, key, year) {
   return rows.filter((row) => row["year"] == year).map((row) => row[key]);
 }
 
-const MapAnimated: React.FC = (): JSX.Element => {
-  const [data, setData] = useState([]);
-  const [frames, setFrames] = useState([]);
-  const [layout, setLayout] = useState({});
-  const [config, setConfig] = useState({});
+const MapAnimated:React.FC = ():JSX.Element => {
+  const [data, setData] = React.useState([]);
+  const [frames, setFrames] = React.useState([]);
+  const [layout, setLayout] = React.useState({});
+  const [config, setConfig] = React.useState({});
 
-  useEffect(() => {
+  React.useEffect(() => {
     async function getData() {
       const rows: [] = await fetchData("./csv/_mapAnim.csv")
 
@@ -57,7 +57,7 @@ const MapAnimated: React.FC = (): JSX.Element => {
       }
 
       var chartConfig =  configurationJSON.config;
-      var chartData:[dataModel] = [
+      var chartData:[IDataModel] = [
         {
           type: "choropleth",
           locationmode: "world",

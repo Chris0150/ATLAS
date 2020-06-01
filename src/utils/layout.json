@@ -276,7 +276,7 @@
       "autosize": false,
       "width": 640,
       "height": 520,
-      "title": "Projected tephra thickness (cm)",
+      "title": "Projected tephra density distribution (mg/cm3)",
       "margin": {},
       "hovermode": "closest",
       "bargap": 0,
@@ -327,10 +327,10 @@
         ],
         "below": "traces",
         "center": {
-          "lat": 43,
-          "lon": -98
+          "lat": 50,
+          "lon": -103
         },
-        "zoom": 4
+        "zoom": 5
       },
       "margin": {
         "r": 0,

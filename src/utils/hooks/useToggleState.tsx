@@ -1,11 +1,8 @@
-import { useState } from "react";
+import React from "react";
 
- const useToggleState = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
-
-  const toggle = () => {
-    setValue(!value);
-  };
+const useToggleState = (initialValue:any) => {
+  const [value, setValue] = React.useState(initialValue);
+  const toggle = ():void => setValue(!value);
 
   return [value, toggle];
 };

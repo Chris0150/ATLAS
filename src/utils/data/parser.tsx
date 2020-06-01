@@ -1,7 +1,7 @@
 
 import Papa from "papaparse";
 
-async function fetchData (path) {
+async function fetchData (path:string) {
     const response = await fetch(path);
     const reader = response.body.getReader();
     const result = await reader.read();
@@ -11,4 +11,4 @@ async function fetchData (path) {
     return results.data;
 }
 
-export default fetchData
+export default fetchData;

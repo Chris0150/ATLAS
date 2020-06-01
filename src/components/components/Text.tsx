@@ -18,11 +18,10 @@ const BasicTextFields = (props:IPropsModel):JSX.Element => {
 
 export default BasicTextFields;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
+      width: '25ch'
+    }
+  }
 }));

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Plot from "react-plotly.js";
 import configurationJSON from "../../utils/config.json"
 import layoutJSON from "../../utils/layout.json"
-import fetchData from "../../utils/_data";
+import fetchData from "../../utils/data/parser";
 
-interface dataModel {
+interface IDataModel {
   x: Number[],
   y: Number[],
   name: String,
@@ -14,20 +14,20 @@ interface dataModel {
   }
 }
 
-const Regression: React.FC = (): JSX.Element => {
-  const [data, setData] = useState([]);
-  const [layout, setLayout] = useState({});
-  const [config, setConfig] = useState({});
+const Regression:React.FC = ():JSX.Element => {
+  const [data, setData] = React.useState([]);
+  const [layout, setLayout] = React.useState({});
+  const [config, setConfig] = React.useState({});
 
-  useEffect(() => {
+  React.useEffect(() => {
 
     async function getData() {
-      const rows: [] = await fetchData("./csv/_regression.csv")
+      const rows:[] = await fetchData("./csv/_regression.csv")
 
       function treatData(rows) {
         var data = [];
         for (var i = 0; i < rows.length; i++) {
-          var dataRow: dataModel = {
+          var dataRow: IDataModel = {
             type: "line",
             name: rows[i].name,
             x: [rows[i].x__0, rows[i].x__1, rows[i].x__2, rows[i].x__3, rows[i].x__4, rows[i].x__5, rows[i].x__6],

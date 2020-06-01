@@ -1,10 +1,10 @@
-import React , { useState, useEffect } from "react";
+import React  from "react";
 import Plot from "react-plotly.js";
-import fetchData from "../../utils/_data";
+import fetchData from "../../utils/data/parser";
 import configurationJSON from "../../utils/config.json"
 import layoutJSON from "../../utils/layout.json"
 
-interface dataModel {
+interface IDataModel {
   type: String,
   lon: Number,
   lat: Number,
@@ -21,16 +21,16 @@ function unpack(rows, key) {
   });
 }
 
-const Map: React.FC = (): JSX.Element => {
-  const [data, setData] = useState([]);
-  const [layout, setLayout] = useState({});
-  const [config, setConfig] = useState({});
+const Map:React.FC = ():JSX.Element => {
+  const [data, setData] = React.useState([]);
+  const [layout, setLayout] = React.useState({});
+  const [config, setConfig] = React.useState({});
 
-  useEffect(() => {
+  React.useEffect(() => {
     async function getData() {
-      const rows: [] = await fetchData("./csv/_map.csv")
+      const rows:[] = await fetchData("./csv/_map.csv")
 
-      var chartData:[dataModel] = [
+      var chartData:[IDataModel] = [
         {
           type: "scattermapbox",
           lon: unpack(rows, "Lon"),

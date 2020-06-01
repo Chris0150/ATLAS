@@ -38,14 +38,14 @@ const ApplicationBar = (props:IPropsModel):JSX.Element => {
 
 export default ApplicationBar;
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    backgroundColor: "#1b2f47",
-  },
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  toolbar: {
+    backgroundColor: "#1b2f47",
   },
+  menuButton: {
+    marginRight: 16,
+  }
 }));

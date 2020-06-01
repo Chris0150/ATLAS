@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Plot from "react-plotly.js";
-import fetchData   from "../../utils/_data";
+import fetchData   from "../../utils/data/parser";
 import configurationJSON from "../../utils/config.json"
 import layoutJSON from "../../utils/layout.json"
 
-interface dataModel{
+interface IDataModel{
   type: String,
   locationmode: String,
   lat: Number,
@@ -31,12 +31,12 @@ function unpack(rows, key) {
   return rows.map(function (row) { return row[key]; });
 }
 
-const MapBubbles: React.FC = (): JSX.Element => {
-  const [data, setData] = useState([]);
-  const [layout, setLayout] = useState({});
-  const [config, setConfig] = useState({});
+const MapBubbles:React.FC = ():JSX.Element => {
+  const [data, setData] = React.useState([]);
+  const [layout, setLayout] = React.useState({});
+  const [config, setConfig] = React.useState({});
 
-  useEffect(() => {
+  React.useEffect(() => {
     async function getData() {      
       const rows:[] = await fetchData("./csv/_mapBub.csv")
 
@@ -55,7 +55,7 @@ const MapBubbles: React.FC = (): JSX.Element => {
         hoverText.push(currentText);
       }
 
-      var chartData:[dataModel] = [{
+      var chartData:[IDataModel] = [{
         type: 'scattergeo',
         locationmode: 'USA-states',
         lat: cityLat,

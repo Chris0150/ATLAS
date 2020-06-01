@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Plot from "react-plotly.js";
 import configurationJSON from "../../utils/config.json"
 import layoutJSON from "../../utils/layout.json";
-import fetchData from "../../utils/_data";
+import fetchData from "../../utils/data/parser";
 
-interface dataModel {
+interface IDataModel {
   name: String,
   x: Number,
   y: Number,
@@ -19,18 +19,18 @@ interface dataModel {
   }
 }
 
-const Bubbles: React.FC = (): JSX.Element => {
-  const [data, setData] = useState([]);
-  const [frames, setFrames] = useState([]);
-  const [layout, setLayout] = useState({});
-  const [config, setConfig] = useState({});
+const Bubbles:React.FC = ():JSX.Element => {
+  const [data, setData] = React.useState([]);
+  const [frames, setFrames] = React.useState([]);
+  const [layout, setLayout] = React.useState({});
+  const [config, setConfig] = React.useState({});
 
-  useEffect(() => {
+  React.useEffect(() => {
 
     async function getData() {
       const rows: [] = await fetchData("./csv/_bubbles.csv")
 
-      function treatData(rows): [any, any] {
+      function treatData(rows:any[]) {
         var traces = [];
         var frames = [];
         var lookup = {};
@@ -73,7 +73,7 @@ const Bubbles: React.FC = (): JSX.Element => {
 
         for (i = 0; i < continents.length; i++) {
           var data = firstYear[continents[i]];
-          var dataRow: dataModel = {
+          var dataRow: IDataModel = {
             name: continents[i],
             x: data.x.slice(),
             y: data.y.slice(),
