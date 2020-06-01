@@ -87,8 +87,8 @@ const Bars:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[] =  await fetchData("./csv/_bars.csv")
+    async function setChart() {
+      const rows:[] =  await fetchData("./csv/bars.csv")
 
       function treatData(rows:any[]) {
         var data = [];
@@ -114,7 +114,7 @@ const Bars:React.FC = ():JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />;
@@ -152,8 +152,8 @@ const Boxes:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[] = await fetchData("./csv/_boxes.csv")
+    async function setChart() {
+      const rows:[] = await fetchData("./csv/boxes.csv")
 
       function treatData(rows:any[]) {
         var data = [];
@@ -188,7 +188,7 @@ const Boxes:React.FC = ():JSX.Element => {
       setLayout(chartLayout);
     }
 
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />
@@ -199,7 +199,7 @@ export default Boxes;
 ```
 
 ### bubbles
-![bubbles](https://imgur.com/bAdtH0l.png)
+![bubbles](https://imgur.com/tqiLR33.png)
 ```javascript
 import React from "react";
 import Plot from "react-plotly.js";
@@ -230,8 +230,8 @@ const Bubbles:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows: [] = await fetchData("./csv/_bubbles.csv")
+    async function setChart() {
+      const rows: [] = await fetchData("./csv/bubbles.csv")
 
       function treatData(rows:any[]) {
         var traces = [];
@@ -317,7 +317,7 @@ const Bubbles:React.FC = ():JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} frames={frames} />
@@ -328,7 +328,7 @@ export default Bubbles;
 ```
 
 ### histogram
-![histogram](https://imgur.com/kqBW12B.png)
+![histogram](https://imgur.com/65Lr4Sv.png)
 ```javascript
 import React from "react";
 import Plot from "react-plotly.js";
@@ -362,8 +362,8 @@ const Histogram: React.FC = (): JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows: [] = await fetchData("./csv/_histogram.csv")
+    async function setChart() {
+      const rows: [] = await fetchData("./csv/histogram.csv")
 
       function treatData(rows: any[]) {
         var data = [];
@@ -445,7 +445,7 @@ const Histogram: React.FC = (): JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />
@@ -487,8 +487,8 @@ const Map:React.FC = ():JSX.Element => {
   const [config, setConfig] = React.useState({});
 
   React.useEffect(() => {
-    async function getData() {
-      const rows:[] = await fetchData("./csv/_map.csv")
+    async function setChart() {
+      const rows:[] = await fetchData("./csv/map.csv")
 
       var chartData:[IDataModel] = [
         {
@@ -507,7 +507,7 @@ const Map:React.FC = ():JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />
@@ -548,8 +548,8 @@ const MapAnimated:React.FC = ():JSX.Element => {
   const [config, setConfig] = React.useState({});
 
   React.useEffect(() => {
-    async function getData() {
-      const rows: [] = await fetchData("./csv/_mapAnim.csv")
+    async function setChart() {
+      const rows: [] = await fetchData("./csv/mapAnim.csv")
 
       var frames = [];
       var slider_steps = [];
@@ -688,7 +688,7 @@ const MapAnimated:React.FC = ():JSX.Element => {
       setLayout(chartLayout);
       setFrames(frames);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} frames={frames} config={config} />
@@ -740,8 +740,8 @@ const MapBubbles:React.FC = ():JSX.Element => {
   const [config, setConfig] = React.useState({});
 
   React.useEffect(() => {
-    async function getData() {      
-      const rows:[] = await fetchData("./csv/_mapBub.csv")
+    async function setChart() {      
+      const rows:[] = await fetchData("./csv/mapBub.csv")
 
       var cityName = unpack(rows, 'name'),
         cityPop = unpack(rows, 'pop'),
@@ -789,7 +789,7 @@ const MapBubbles:React.FC = ():JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />
@@ -825,8 +825,8 @@ const Regression:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[] = await fetchData("./csv/_regression.csv")
+    async function setChart() {
+      const rows:[] = await fetchData("./csv/regression.csv")
 
       function treatData(rows) {
         var data = [];
@@ -851,7 +851,7 @@ const Regression:React.FC = ():JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />
@@ -900,8 +900,8 @@ const Splom:React.FC = ():JSX.Element => {
     const [config, setConfig] = React.useState({});
 
     React.useEffect(() => {
-        async function getData() {
-            const rows:[] = await fetchData("./csv/_splom.csv")
+        async function setChart() {
+            const rows:[] = await fetchData("./csv/splom.csv")
 
             let colors = []
             let i: number;
@@ -952,7 +952,7 @@ const Splom:React.FC = ():JSX.Element => {
             setConfig(chartConfig);
             setLayout(chartLayout);
         }
-        getData();
+        setChart();
     }, []);
 
     return <Plot data={data} layout={layout} config={config} />
@@ -988,9 +988,9 @@ const Surface3D:React.FC = ():JSX.Element => {
   const [config, setConfig] = React.useState({});
 
   React.useEffect(() => {
-    async function getData() {
+    async function setChart() {
 
-      const rows:[] = await fetchData("./csv/_surface3D.csv")
+      const rows:[] = await fetchData("./csv/surface3D.csv")
 
       function treatData(rows: []) {
         var data = [];
@@ -1020,7 +1020,7 @@ const Surface3D:React.FC = ():JSX.Element => {
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />;
@@ -1060,8 +1060,8 @@ const Timeline:React.FC = ():JSX.Element => {
     const [config, setConfig] = React.useState({});
 
     React.useEffect(() => {
-        async function getData() {
-            const rows:[] = await fetchData("./csv/_timeline.csv")
+        async function setChart() {
+            const rows:[] = await fetchData("./csv/timeline.csv")
 
             var frames = []
             var x = unpack(rows, 'Date')
@@ -1107,7 +1107,7 @@ const Timeline:React.FC = ():JSX.Element => {
             setConfig(chartConfig);
             setLayout(chartLayout);
         }
-        getData();
+        setChart();
     }, []);
 
     return <Plot data={data} layout={layout} config={config} frames={frames}/>

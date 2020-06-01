@@ -18,17 +18,14 @@ const Bars: React.FC = (): JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[IDataModel] = await Utils.fetchData("./csv/_bars.csv")
-      const chartData = await Utils.transformData(rows, "bars");
-      const chartConfig = Utils.configurationJSON.config;
-      const chartLayout = Utils.layoutJSON.layout.bars;
+    async function setChart() {
+      const { chartData, chartConfig, chartLayout } = await Utils.loadData("bars");
 
       setData(chartData);
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />;

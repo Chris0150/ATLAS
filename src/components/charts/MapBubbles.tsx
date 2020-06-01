@@ -32,17 +32,14 @@ const MapBubbles:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {      
-      const rows:[IDataModel] = await Utils.fetchData("./csv/_mapBub.csv")
-      const chartData = await Utils.transformData(rows, "mapBubbles");
-      const chartConfig = Utils.configurationJSON.config;
-      const chartLayout = Utils.layoutJSON.layout.mapBubbles;
+    async function setChart() {      
+      const { chartData, chartConfig, chartLayout } = await Utils.loadData("mapBub");
 
       setData(chartData);
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />

@@ -1,21 +1,23 @@
 
 
 // This function receives the data rows loaded from the .csv file, 
-// and uses them to create the necessary structure needed for the corresponding chart.
-
+// and creates with them the necessary structure needed for the corresponding chart.
 async function transformData(rows, chart) {
     let chartData;
     let dataRow;
     let data;
     let frames;
     let colors;
-    let i, j;
+    let x;
+    let y;
+    let i;
     let z;
     let n;
 
     switch (chart) {
-
-        ///////////////////// BARS /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// BARS //////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "bars":
             data = [];
             for (i = 0; i < rows.length - 1; i++) {
@@ -31,7 +33,9 @@ async function transformData(rows, chart) {
             }
             return data;
 
-        ///////////////////// BOXES /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// BOXES /////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "boxes":
             data = [];
             for (i = 0; i < rows.length; i++) {
@@ -55,7 +59,9 @@ async function transformData(rows, chart) {
             }
             return data
 
-        ///////////////////// BUBBLES /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// BUBBLES /////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "bubbles":
             var traces = [];
             frames = [];
@@ -128,79 +134,47 @@ async function transformData(rows, chart) {
 
             return [traces, frames]
 
-        ///////////////////// HISTOGRAM /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// HISTOGRAM ///////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "histogram":
-            data = [];
-
-            for (i = 1; i < 4; i++) {
-                let x = []
-                let y = []
-
-                let values: any = Object.values(rows[i]);
-                let keys = Object.keys(rows[i]);
-
-                for (j = 0; j < values.length; j++) {
-                    if (keys[j].indexOf("x_") > -1) {
-                        var value = values[j];
-                        var parsedValue = parseFloat(value);
-                        x.push(parsedValue);
-                    }
-                    if (keys[j].indexOf("y_") > -1) {
-                        var value2 = values[j];
-                        var parsedValue2 = parseFloat(value2);
-                        y.push(parsedValue2);
-                    }
-                }
-
-                var dataRow1 = {
-                    x: x,
-                    y: y,
-                    mode: 'markers',
-                    name: rows[i].name,
-                    type: rows[i].type,
-                    marker: {
-                        color: rows[i].marker__color,
-                        size: rows[i].marker__size,
-                        opacity: rows[i].marker__opacity
-                    }
-                }
-
-                var dataRow2 = {
-                    x: x,
-                    y: y,
-                    name: rows[i].name,
-                    ncontours: rows[i].ncontours,
-                    colorscale: rows[i].colorscale,
-                    reversescale: true,
-                    showscale: rows[i].showscale,
-                    type: rows[i].type,
-                }
-
-                var dataRow3 = {
-                    x: x,
-                    name: rows[i].name,
-                    type: rows[i].type,
-                    marker: {
-                        color: rows[i].marker__color
-                    },
-                    yaxis: rows[i].yaxis,
-                }
-
-                var dataRow4 = {
-                    y: y,
-                    name: rows[i].name,
-                    type: rows[i].type,
-                    marker: {
-                        color: rows[i].marker__color
-                    },
-                    xaxis: rows[i].xaxis
-                }
-
-                data.push([dataRow1, dataRow2, dataRow3, dataRow4]);
+            x = [];
+            y = [];
+            for (i = 0; i < 500; i++) {
+                x[i] = Math.random();
+                y[i] = Math.random() + 1;
             }
-            return data[0];
 
-        ///////////////////// MAP /////////////////////
+            data = [{
+                    x: x,
+                    y: y,
+                    bgcolor: "transparent",
+                    plot_bgcolor: "transparent",
+                    paper_bgcolor: "transparent",
+                    colorscale: 'Reds',
+                    type: 'histogram2dcontour',
+                    contours: {
+                        showlabels: true,
+                        labelfont: {
+                            family: 'Raleway',
+                            color: 'white'
+                        }
+                    },
+                    hoverlabel: {
+                        bgcolor: 'white',
+                        bordercolor: 'black',
+                        font: {
+                            family: 'Raleway',
+                            color: 'black'
+                        }
+                    }
+                }];
+
+            return data;
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// MAP GEO /////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "map":
 
             const unpack2 = (rows, key) => {
@@ -221,149 +195,153 @@ async function transformData(rows, chart) {
 
             return chartData;
 
-        ///////////////////// MAP ANIMATED /////////////////////
-        case "mapAnimated":
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// MAP ANIMATED ////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        case "mapAnim":
 
             const filter_and_unpack = (rows, key, year) => {
                 // eslint-disable-next-line
                 return rows.filter((row) => row["year"] == year).map((row) => row[key]);
-              }
+            }
 
-        frames = [];
-      var slider_steps = [];
+            frames = [];
+            var slider_steps = [];
 
-      n = 11;
-      var num = 1952;
-      for (i = 0; i <= n; i++) {
-        z = filter_and_unpack(rows, "lifeExp", num);
-        var locations = filter_and_unpack(rows, "iso_alpha", num);
-        frames[i] = {
-          data: [{ z: z, locations: locations, text: locations }],
-          name: num,
-        };
-        slider_steps.push({
-          label: num.toString(),
-          method: "animate",
-          args: [
-            [num],
-            {
-              mode: "immediate",
-              transition: { duration: 300 },
-              frame: { duration: 300 },
-            },
-          ],
-        });
-        num = num + 5;
-      }
+            n = 11;
+            var num = 1952;
+            for (i = 0; i <= n; i++) {
+                z = filter_and_unpack(rows, "lifeExp", num);
+                var locations = filter_and_unpack(rows, "iso_alpha", num);
+                frames[i] = {
+                    data: [{ z: z, locations: locations, text: locations }],
+                    name: num,
+                };
+                slider_steps.push({
+                    label: num.toString(),
+                    method: "animate",
+                    args: [
+                        [num],
+                        {
+                            mode: "immediate",
+                            transition: { duration: 300 },
+                            frame: { duration: 300 },
+                        },
+                    ],
+                });
+                num = num + 5;
+            }
 
-      chartData = [
-        {
-          type: "choropleth",
-          locationmode: "world",
-          locations: frames[0].data[0].locations,
-          z: frames[0].data[0].z,
-          text: frames[0].data[0].locations,
-          zauto: false,
-          zmin: 30,
-          zmax: 90,
-        },
-      ];
-      
-      var chartLayout = {
-        title: "Evolution of air pollutants concentration (PPM) per country:", 
-        paper_bgcolor: "transparent",
-        plot_bgcolor: "transparent",
-        width: 1080,
-        height: 760,
-        geo: {
-          scope: "world",
-          countrycolor: "rgb(255, 255, 255)",
-          bgcolor: "rgba(255, 255, 255, 0.1)",
-          showland: true,
-          landcolor: "rgb(217, 217, 217)",
-          showlakes: true,
-          lakecolor: "rgb(255, 255, 255)",
-          subunitcolor: "rgb(255, 255, 255)",
-          lonaxis: {},
-          lataxis: {},
-        },
-        updatemenus: [
-          {
-            x: 0.1,
-            y: 1,
-            yanchor: "top",
-            xanchor: "right",
-            showactive: false,
-            direction: "left",
-            type: "buttons",
-            bgcolor: "#d39697",
-            buttons: [
-              {
-                method: "animate",
-                args: [
-                  null,
-                  {
-                    fromcurrent: true,
-                    transition: {
-                      duration: 200,
+            chartData = [
+                {
+                    type: "choropleth",
+                    locationmode: "world",
+                    locations: frames[0].data[0].locations,
+                    z: frames[0].data[0].z,
+                    text: frames[0].data[0].locations,
+                    zauto: false,
+                    zmin: 30,
+                    zmax: 90,
+                },
+            ];
+
+            var chartLayout = {
+                title: "Evolution of air pollutants concentration (PPM) per country:",
+                paper_bgcolor: "transparent",
+                plot_bgcolor: "transparent",
+                width: 1080,
+                height: 760,
+                geo: {
+                    scope: "world",
+                    countrycolor: "rgb(255, 255, 255)",
+                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                    showland: true,
+                    landcolor: "rgb(217, 217, 217)",
+                    showlakes: true,
+                    lakecolor: "rgb(255, 255, 255)",
+                    subunitcolor: "rgb(255, 255, 255)",
+                    lonaxis: {},
+                    lataxis: {},
+                },
+                updatemenus: [
+                    {
+                        x: 0.1,
+                        y: 1,
+                        yanchor: "top",
+                        xanchor: "right",
+                        showactive: false,
+                        direction: "left",
+                        type: "buttons",
+                        bgcolor: "#d39697",
+                        buttons: [
+                            {
+                                method: "animate",
+                                args: [
+                                    null,
+                                    {
+                                        fromcurrent: true,
+                                        transition: {
+                                            duration: 200,
+                                        },
+                                        frame: {
+                                            duration: 500,
+                                        },
+                                    },
+                                ],
+                                label: "Play",
+                            },
+                            {
+                                method: "animate",
+                                args: [
+                                    [null],
+                                    {
+                                        mode: "immediate",
+                                        transition: {
+                                            duration: 0,
+                                        },
+                                        frame: {
+                                            duration: 0,
+                                        },
+                                    },
+                                ],
+                                label: "Pause",
+                            },
+                        ],
                     },
-                    frame: {
-                      duration: 500,
-                    },
-                  },
                 ],
-                label: "Play",
-              },
-              {
-                method: "animate",
-                args: [
-                  [null],
-                  {
-                    mode: "immediate",
-                    transition: {
-                      duration: 0,
+                sliders: [
+                    {
+                        active: 0,
+                        steps: slider_steps,
+                        x: 0.1,
+                        y: 1,
+                        len: 0.9,
+                        xanchor: "left",
+                        yanchor: "top",
+                        pad: { t: -30, b: 10, l: 20 },
+                        currentvalue: {
+                            visible: true,
+                            prefix: "Year:",
+                            xanchor: "right",
+                            font: {
+                                size: 20,
+                                color: "#666",
+                            },
+                        },
+                        transition: {
+                            duration: 300,
+                            easing: "cubic-in-out",
+                        },
                     },
-                    frame: {
-                      duration: 0,
-                    },
-                  },
                 ],
-                label: "Pause",
-              },
-            ],
-          },
-        ],
-        sliders: [
-          {
-            active: 0,
-            steps: slider_steps,
-            x: 0.1,
-            y: 1,
-            len: 0.9,
-            xanchor: "left",
-            yanchor: "top",
-            pad: { t: -30, b: 10, l: 20 },
-            currentvalue: {
-              visible: true,
-              prefix: "Year:",
-              xanchor: "right",
-              font: {
-                size: 20,
-                color: "#666",
-              },
-            },
-            transition: {
-              duration: 300,
-              easing: "cubic-in-out",
-            },
-          },
-        ],
-      };
+            };
 
-      return [chartData, chartLayout, frames]
+            return [chartData, chartLayout, frames]
 
-        ///////////////////// MAP BUBBLES /////////////////////
-        case "mapBubbles":
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// MAP BUBBLES /////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        case "mapBub":
             const unpack3 = (rows, key) => {
                 return rows.map(function (row) { return row[key]; });
             }
@@ -409,7 +387,9 @@ async function transformData(rows, chart) {
 
             return chartData;
 
-        ///////////////////// REGRESSION /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// REGRESSION //////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "regression":
             data = [];
             for (i = 0; i < rows.length; i++) {
@@ -424,7 +404,9 @@ async function transformData(rows, chart) {
             }
             return data
 
-        ///////////////////// SPLOM /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// SPLOM ///////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "splom":
 
             const unpack4 = (rows, key) => {
@@ -474,7 +456,9 @@ async function transformData(rows, chart) {
 
             return data;
 
-        ///////////////////// SURFACE 3D /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////// SURFACE 3D ////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "surface3D":
             data = [];
             z = [];
@@ -495,7 +479,9 @@ async function transformData(rows, chart) {
 
             return data
 
-        ///////////////////// TIMELINE /////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////// TIMELINE ////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         case "timeline":
 
             const unpack5 = (rows, key) => {
@@ -503,8 +489,8 @@ async function transformData(rows, chart) {
             }
 
             frames = []
-            var x = unpack5(rows, 'Date')
-            var y = unpack5(rows, 'High')
+            x = unpack5(rows, 'Date')
+            y = unpack5(rows, 'High')
             var x2 = unpack5(rows, 'Date')
             var y2 = unpack5(rows, 'Low')
 

@@ -19,17 +19,14 @@ const Regression:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[IDataModel] = await Utils.fetchData("./csv/_regression.csv")
-      const chartData = await Utils.transformData(rows, "regression");
-      const chartConfig = Utils.configurationJSON.config;
-      const chartLayout = Utils.layoutJSON.layout.regression;
+    async function setChart() {
+      const { chartData, chartConfig, chartLayout } = await Utils.loadData("regression");
 
       setData(chartData);
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />

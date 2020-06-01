@@ -25,20 +25,17 @@ const Bubbles:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[IDataModel] = await Utils.fetchData("./csv/_bubbles.csv")
-      const data = await Utils.transformData(rows, "bubbles");
-      const chartConfig = Utils.configurationJSON.config;
-      const chartLayout = Utils.layoutJSON.layout.bubbles;
-      const chartData = data[0];
-      const chartFrames = data[1];
+    async function setChart() {
+      const { chartData, chartConfig, chartLayout } = await Utils.loadData("bubbles");
+      const chartData2 = chartData[0];
+      const chartFrames = chartData[1];
 
-      setData(chartData);
+      setData(chartData2);
       setFrames(chartFrames);
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} frames={frames} />

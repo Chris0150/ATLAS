@@ -340,7 +340,7 @@
       },
       "showlegend": false
     },
-    "mapBubbles": {
+    "mapBub": {
       "paper_bgcolor": "transparent",
       "bgcolor": "transparent",
       "color": "transparent",
@@ -350,9 +350,11 @@
       "title": "Source distribution:",
       "showlegend": false,
       "geo": {
+        "bgcolor": "transparent",
         "scope": "usa",
         "projection": {
-          "type": "albers usa"
+          "type": "albers usa",
+          "fill": "transparent"
         },
         "showgrid": true,
         "showland": true,
@@ -371,7 +373,6 @@
       "width": 640,
       "height": 520,
       "title": "Projection of concentration (%) of sedimented tephra"
-
     },
     "splom": {
       "paper_bgcolor": "transparent",

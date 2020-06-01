@@ -20,20 +20,19 @@ const MapAnimated:React.FC = ():JSX.Element => {
   const [config, setConfig] = React.useState({});
 
   React.useEffect(() => {
-    async function getData() {
-      const rows:[IDataModel] = await Utils.fetchData("./csv/_mapAnim.csv")
-      const data = await Utils.transformData(rows, "mapAnimated");
-      const chartConfig = Utils.configurationJSON.config;
-      const chartData = data[0];
-      const chartLayout = data[1];
-      const chartFrames = data[2];
+    async function setChart() {      
+      const { chartData, chartConfig } = await Utils.loadData("mapAnim");
+      
+      const chartData2 = chartData[0];
+      const chartLayout2 = chartData[1];
+      const chartFrames = chartData[2];
 
-      setData(chartData);
-      setLayout(chartLayout);
+      setData(chartData2);
       setFrames(chartFrames);
       setConfig(chartConfig);
+      setLayout(chartLayout2);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} frames={frames} config={config} />

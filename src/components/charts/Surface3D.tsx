@@ -20,17 +20,14 @@ const Surface3D:React.FC = ():JSX.Element => {
 
   React.useEffect(() => {
 
-    async function getData() {
-      const rows:[IDataModel] = await Utils.fetchData("./csv/_surface3D.csv")
-      const chartData = await Utils.transformData(rows, "surface3D");
-      const chartConfig = Utils.configurationJSON.config;
-      const chartLayout = Utils.layoutJSON.layout.surface3D;
+    async function setChart() {
+      const { chartData, chartConfig, chartLayout } = await Utils.loadData("surface3D");
 
       setData(chartData);
       setConfig(chartConfig);
       setLayout(chartLayout);
     }
-    getData();
+    setChart();
   }, []);
 
   return <Plot data={data} layout={layout} config={config} />;

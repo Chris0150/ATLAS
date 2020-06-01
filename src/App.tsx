@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "./components/components/Appbar";
 import Menu from "./components/components/Menu";
 import Loader from "./components/components/Loader";
-import * as Charts from "./utils/charts/loader";
+import * as Charts from "./utils/charts/importer";
 
 const App: React.FC = (): JSX.Element => {
   const classes = useStyles();

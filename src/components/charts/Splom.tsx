@@ -29,17 +29,14 @@ const Splom: React.FC = (): JSX.Element => {
 
     React.useEffect(() => {
 
-        async function getData() {
-            const rows:[IDataModel] = await Utils.fetchData("./csv/_splom.csv")
-            const chartData = await Utils.transformData(rows, "splom");
-            const chartLayout = Utils.layoutJSON.layout.splom;
-            const chartConfig = Utils.configurationJSON.config;
+        async function setChart() {
+            const { chartData, chartConfig, chartLayout } = await Utils.loadData("splom");
 
             setData(chartData);
             setConfig(chartConfig);
             setLayout(chartLayout);
         }
-        getData();
+        setChart();
     }, []);
 
     return <Plot data={data} layout={layout} config={config} />
