@@ -1,8 +1,6 @@
 import React  from "react";
 import Plot from "react-plotly.js";
-import fetchData from "../../utils/data/parser";
-import configurationJSON from "../../utils/config.json"
-import layoutJSON from "../../utils/layout.json"
+import * as Utils from "../../utils/utils";
 
 interface IDataModel {
   type: String,
@@ -15,33 +13,18 @@ interface IDataModel {
   }
 }
 
-function unpack(rows, key) {
-  return rows.map(function (row) {
-    return row[key];
-  });
-}
-
 const Map:React.FC = ():JSX.Element => {
   const [data, setData] = React.useState([]);
   const [layout, setLayout] = React.useState({});
   const [config, setConfig] = React.useState({});
 
   React.useEffect(() => {
+
     async function getData() {
-      const rows:[] = await fetchData("./csv/_map.csv")
-
-      var chartData:[IDataModel] = [
-        {
-          type: "scattermapbox",
-          lon: unpack(rows, "Lon"),
-          lat: unpack(rows, "Lat"),
-          text: unpack(rows, "Globvalue"),
-          marker: { color: "#b71522", size: 5 }
-        },
-      ];
-
-      var chartConfig =  configurationJSON.config;
-      var chartLayout = layoutJSON.layout.map;
+      const rows:[IDataModel] = await Utils.fetchData("./csv/_map.csv")
+      const chartData = await Utils.transformData(rows, "map");
+      const chartConfig =  Utils.configurationJSON.config;
+      const chartLayout = Utils.layoutJSON.layout.map;
 
       setData(chartData);
       setConfig(chartConfig);

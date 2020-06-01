@@ -4,12 +4,12 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "./components/components/Appbar";
 import Menu from "./components/components/Menu";
 import Loader from "./components/components/Loader";
-import * as Charts from "./utils/data/charts";
+import * as Charts from "./utils/charts/loader";
 
 const App: React.FC = (): JSX.Element => {
   const classes = useStyles();
   const [charts, showCharts] = React.useState(false);
-  const runSimulation = ():void => showCharts(true);
+  const runSimulation = (): void => showCharts(true);
 
   return (
     <>
@@ -26,13 +26,13 @@ const App: React.FC = (): JSX.Element => {
               <Charts.Surface3D />
               <Charts.Bubbles />
               <Charts.Splom />
-              <Charts.MapAnimated /> 
+              <Charts.MapAnimated />
               <Charts.Bars />
               <Charts.Boxes />
               <Charts.Regression />
               <Charts.Timeline />
-              <Charts.MapBubbles /> 
               <Charts.Histogram />
+              <Charts.MapBubbles />
             </>
           ) : null}
         </div>
