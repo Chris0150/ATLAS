@@ -199,7 +199,7 @@ export default Boxes;
 ```
 
 ### bubbles
-![bubbles](https://imgur.com/tqiLR33.png)
+![bubbles](https://imgur.com/bAdtH0l.png)
 ```javascript
 import React from "react";
 import Plot from "react-plotly.js";
@@ -699,7 +699,7 @@ export default MapAnimated;
 ```
 
 ### bubblemap
-![bubblemap](https://imgur.com/WyQQWyp.png)
+![bubblemap](https://imgur.com/tqiLR33.png)
 ```javascript
 import React from "react";
 import Plot from "react-plotly.js";
